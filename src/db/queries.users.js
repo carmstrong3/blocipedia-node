@@ -22,5 +22,4 @@ module.exports = {
       callback(err);
     })
   }
-
 }
