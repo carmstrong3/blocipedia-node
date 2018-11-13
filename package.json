@@ -12,9 +12,9 @@
   "dependencies": {
     "@sendgrid/mail": "^6.3.1",
     "bcryptjs": "^2.4.3",
-    "dotenv": "^5.0.0",
+    "dotenv": "^5.0.1",
     "ejs": "^2.6.1",
-    "express": "^4.16.2",
+    "express": "^4.16.4",
     "express-flash": "0.0.2",
     "express-session": "^1.15.6",
     "express-validator": "^5.3.0",
@@ -23,10 +23,11 @@
     "passport-local": "^1.0.0",
     "pg": "^7.6.1",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.41.1"
+    "sequelize": "^4.41.2"
   },
   "devDependencies": {
-    "jasmine": "^3.0.0",
-    "request": "^2.83.0"
+    "faker": "^4.1.0",
+    "jasmine": "^3.3.0",
+    "request": "^2.88.0"
   }
 }
