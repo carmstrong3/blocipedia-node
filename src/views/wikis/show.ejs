@@ -11,7 +11,7 @@
       <div style="display: flex, align-items:center;">
       <h1><%= wiki.title %></h1>
       </div>
-      <% if(currentUser && currentUser.isOwner()) { %>
+      <% if(currentUser && (currentUser.isOwner(currentUser, wiki.userId) || currentUser.isAdmin(currentUser))) { %>
       <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit</a>
         <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
           <button type="submit" class="btn btn-danger">Delete</button>

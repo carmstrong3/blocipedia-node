@@ -24,14 +24,12 @@ module.exports = (sequelize, DataTypes) => {
     // User has many wikis with the foreign key being the userId
  };
 
-  User.prototype.isAdmin = () => {
-    return this.role === "admin";
+  User.prototype.isAdmin = (currentUser) => {
+    return currentUser.dataValues.role === "admin";
   }
 
-  User.prototype.isOwner = (wikiUserId) => {
-    console.log("This id is: " + this.dataValues.id); // dataValues is undefined
-    console.log("Wiki user id is: " + wikiUserId);
-    return this.dataValues.id === wikiUserId;
+  User.prototype.isOwner = (currentUser, wikiUserId) => {
+    return currentUser.dataValues.id === wikiUserId;
   }
 
   return User;
