@@ -19,16 +19,6 @@ module.exports = {
       private: {
         type: Sequelize.BOOLEAN,
         allowNull: false
-      },
-      userId: {
-        type: Sequelize.INTEGER,
-        onDelete: "CASCADE",
-        allowNull: false,
-        references: {
-          model: "Users",
-          key: "id",
-          as: "userId"
-        }
       }, 
       createdAt: {
         allowNull: false,

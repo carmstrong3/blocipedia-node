@@ -18,6 +18,7 @@ module.exports = {
 // Call the createUser function, passing in newUser and a callback
      userQueries.createUser(newUser, (err, user) => {
        if(err){
+         console.log(err);
          req.flash("error", err);
          res.redirect("/users/signup");
        } else {
@@ -33,7 +34,7 @@ module.exports = {
      };
      sgMail.send(msg);
 
-
+         console.log(newUser);
          passport.authenticate("local")(req, res, () => {
            req.flash("notice", "You've successfully signed in!");
            res.redirect("/wikis");
