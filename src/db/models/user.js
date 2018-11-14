@@ -28,9 +28,10 @@ module.exports = (sequelize, DataTypes) => {
     return this.role === "admin";
   }
 
-  User.prototype.isOwner = () => {
-    console.log(this.id);
-    return this.id === 1;
+  User.prototype.isOwner = (wikiUserId) => {
+    console.log("This id is: " + this.dataValues.id); // dataValues is undefined
+    console.log("Wiki user id is: " + wikiUserId);
+    return this.dataValues.id === wikiUserId;
   }
 
   return User;

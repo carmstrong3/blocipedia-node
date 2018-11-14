@@ -14,7 +14,6 @@ module.exports = {
     })
   },
   addWiki(newWiki, callback){
-    console.log(newWiki);
     return Wiki.create(newWiki)
     .then((wiki) => {
       callback(null, wiki);
@@ -40,8 +39,8 @@ module.exports = {
       if(!wiki){
         return callback("Wiki not found");
       }
-     /* const authorized = new Authorizer(req.user, wiki).update();
-      if(authorized) { */
+      const authorized = new Authorizer(req.user, wiki).update();
+      if(authorized) { 
         wiki.update(updatedWiki, {
           fields: Object.keys(updatedWiki)
         })
@@ -51,26 +50,26 @@ module.exports = {
         .catch((err) => {
           callback(err);
         });
-      /*} else {
+      } else {
       req.flash("notice", "You are not authorized to do that.");
       callback("Forbidden");
-     } */
+     } 
    });
   },
   deleteWiki(req, callback){
     return Wiki.findByPk(req.params.id)
     .then((wiki) => {
-     /* const authorized = new Authorizer(req.user, wiki).destroy();
-      if(authorized) { */
+      const authorized = new Authorizer(req.user, wiki).destroy();
+      if(authorized) { 
         wiki.destroy()
         .then((res) => {
           callback(null, wiki);
         });
         
-    /*} else {
+    } else {
         req.flash("notice", "You are not authorized to do that.")
         callback(401);
-      } */
+      } 
     })
     .catch((err) => {
       callback(err);
