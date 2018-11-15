@@ -1,14 +1,15 @@
 'use strict';
-
+// load faker. faker info at https://github.com/marak/Faker.js/ 
 const faker = require("faker");
-
-let wikis = [];
-
-for(let i = 1; i <=15; i++){
-  wikis.push({
-    title: faker.hacker.noun(),
-    body: faker.hacker.phrase(),
-    private: false,
+// initialize users
+let users = [];
+// push values to users
+for(let i = 0; i <= 10; i++){
+// info needs to match user model.
+  users.push({
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+    role: "member",
     createdAt: new Date(),
     updatedAt: new Date()
   });
@@ -26,7 +27,8 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    return queryInterface.bulkInsert("Wikis", wikis, {});
+    return queryInterface.bulkInsert('Users', users, {});
+
   },
 
   down: (queryInterface, Sequelize) => {
@@ -37,6 +39,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('People', null, {});
     */
-    return queryInterface.bulkDelete("Wikis", null, {});
+    return queryInterface.bulkDelete('Users', null, {});
   }
 };
