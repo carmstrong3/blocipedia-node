@@ -25,7 +25,17 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "userId",
       onDelete: "CASCADE"
     });    
-
   };
+
+  // Define the scope by calling addScope on the model.
+  Wiki.addScope("lastFiveFor", (userId) => {
+    return {
+  // Return the implemented query
+      where: {userId: userId},
+  // Set a limit which establishes the maximum number of records the query will return. Order by newest first by the "createdAt" property of the post.
+      limit: 5,     
+      order: [["createdAt", "DESC"]]
+    }
+  });
   return Wiki;
 };

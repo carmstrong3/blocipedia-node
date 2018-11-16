@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body>
+
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="container">
+
+ <!-- Evaluate the user's email -->
+      <h1><%= `${result["user"].email}'s profile` %></h1>
+
+      <hr>
+
+      <h2> Latest Wiki Submissions</h2>
+
+      <ul class="list-unstyled">
+
+ <!-- Check if there are posts for the user -->
+        <% if(result["wikis"]) { %>
+          <% result["wikis"].forEach((wiki) => { %>
+ <!-- If there are wikis, build a <li> for each and link to the wiki's show view -->
+            <li>
+              <a href="/wikis/<%= wiki.id %>">
+                <%= wiki.title %>
+              </a>
+            </li>
+          <% }) %>
+        <% } %>
+      </ul>
+      <hr>
+      <div>
+          <p>Upgrade your account</p>
+          <form action="/users/checkout" method="POST"> 
+            <script 
+              src="https://checkout.stripe.com/checkout.js" class="stripe-button" 
+              data-key="pk_test_SnsRTtksPdC6httJl7gqWq40" 
+              data-amount="999" 
+              data-name="Demo Site" 
+              data-description="Example charge" 
+              data-image="https://stripe.com/img/documentation/checkout/marketplace.png" 
+              data-locale="auto"> 
+            </script> 
+          </form>
+          <p>Downgrade your account</p>
+          <form action="/users/downgrade" method="POST">
+            <button type="submit">Submit</button>
+          </form> 
+      </div>
+    <% include ../static/partials/baseScripts.ejs %>
+
+  </body>
+</html>
+

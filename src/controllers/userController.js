@@ -1,6 +1,9 @@
 const passport = require("passport");
 const userQueries = require("../db/queries.users.js");
 const sgMail = require('@sendgrid/mail');
+// Set your secret key: remember to change this to your live secret key in production
+// See your keys here: https://dashboard.stripe.com/account/apikeys
+var stripe = require("stripe")("sk_test_sQXp1MgTszrY4qr6aZeDGNCn");
 
 module.exports = {
   signUpForm(req, res, next){
@@ -76,7 +79,38 @@ module.exports = {
         res.render("users/show", {result});
       }
     });
-  }
+  },
+  checkOutView(req, res, next){
+    res.render("users/upgrade");
+  },
+  checkOut(req, res, next){
+    const token = req.body.stripeToken; // Using Express
 
+    const charge = stripe.charges.create({
+      amount: 999,
+      currency: 'usd',
+      description: 'Example charge',
+      source: token,
+    });
+  // Grab the user
+    userQueries.setPremiumUser(res.locals.currentUser.id, (err, result) => {
+      if(err || result.users === undefined){
+        req.flash("notice", "No user found with that ID.");
+        res.redirect("users/show")
+      } else {
+        res.redirect(303, "users/show");
+      };
+    });
+  },
+  downgrade(req, res, next){
+    userQueries.setMemberUser(res.locals.currentUser.id, (err, result) => {
+      if(err || result.users === undefined){
+        req.flash("notice", "No user found with that ID.");
+        res.redirect("/")
+      } else {
+        res.redirect(303, "/");
+      };
+    });
+  }
 }
 
