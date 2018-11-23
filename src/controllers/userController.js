@@ -1,6 +1,7 @@
 const passport = require("passport");
 const userQueries = require("../db/queries.users.js");
 const sgMail = require('@sendgrid/mail');
+const wikiQueries = require("../db/queries.wikis.js");
 // Set your secret key: remember to change this to your live secret key in production
 // See your keys here: https://dashboard.stripe.com/account/apikeys
 var stripe = require("stripe")("sk_test_sQXp1MgTszrY4qr6aZeDGNCn");
@@ -98,18 +99,25 @@ module.exports = {
         req.flash("notice", "No user found with that ID.");
         res.redirect("users/show")
       } else {
-        res.redirect(303, "users/show");
+        res.redirect(303, "/");
       };
     });
   },
   downgrade(req, res, next){
     userQueries.setMemberUser(res.locals.currentUser.id, (err, result) => {
-      if(err || result.users === undefined){
+      if(err){
         req.flash("notice", "No user found with that ID.");
         res.redirect("/")
       } else {
-        res.redirect(303, "/");
-      };
+        wikiQueries.setPrivateToPublic(res.locals.currentUser.id, (err, result) => {
+          if(err){
+            req.flash("notice", "No user found with that ID.");
+            res.redirect("/")
+          } else {
+           res.redirect(303, "/");
+          };
+        })
+      }
     });
   }
 }

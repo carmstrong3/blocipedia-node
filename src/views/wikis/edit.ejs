@@ -22,10 +22,12 @@
           <small class="text-muted" id="bodyHelp">body must be 10 or more characters in length.</small>
         </div>
 <br>
+      <% if(currentUser && currentUser.role === "premium") { %>
         <div class="form-group">
           <label for="private">Private?</label>
           <input value="<%= wiki.private %>" type="text" class="form-control" name="private" aria-describedby="privateHelp" placeholder="Enter true or false">
         </div>
+      <% } %>
        <button type="submit" class="btn btn-primary">Update</button>
       </form>
     </main>

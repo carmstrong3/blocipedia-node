@@ -91,5 +91,48 @@ describe("routes : wikis", () => {
         });
       });
     });
-  });    
+  });  // end member user context
+
+  // Environment for premium user
+  describe("Premium User", () => {
+    // Authenticate new user 
+    beforeEach((done) => {
+      User.create({
+        email: "premium@example.com",
+        password: "123456",
+        role: "premium"
+      })
+      .then((user) => {
+        let premiumUser = user;
+        request.get({         // mock authentication
+          url: "http://localhost:3000/auth/fake",
+          form: {
+            role: user.role,     // mock authenticate as a premium user
+            userId: user.id,
+            email: user.email
+          }
+        },
+          (err, res, body) => {
+            done();
+          }
+        );
+      });
+    });
+    // Wikis main page
+    describe("GET /wikis", () => {
+      // Should not be able to edit previously made wikis that member is not owner of
+      it("should render the wikis page without giving options to edit or delete wikis while still giving ability to create new wiki.", (done) => {
+
+        request.get(base, (err, res, body) => {
+          expect(err).toBeNull();
+          expect(body).toContain("Wiki")  // New Wiki button should show
+          expect(body).not.toContain("Edit");  // Edit button should not show
+          expect(body).not.toContain("Delete"); // Delete button should not show
+          done();
+        });
+      });
+    });
+
+  });  // end premium user context
+ 
 });

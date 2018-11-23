@@ -16,10 +16,12 @@
           <label for="body">Body</label>
           <textarea rows="4" class="form-control" name="body" placeholder="Enter Body Text"></textarea>
         </div>
+      <% if(currentUser && currentUser.role === "premium") { %>
         <div class="form-group">
           <label for="private">Private?</label>
           <input type="text" class="form-control" name="private" aria-describedby="privateHelp" placeholder="Enter true or false">
         </div>
+      <% } %>
        <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </main>

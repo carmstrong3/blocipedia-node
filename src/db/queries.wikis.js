@@ -74,6 +74,18 @@ module.exports = {
     .catch((err) => {
       callback(err);
     });
-  } 
+  },
+  setPrivateToPublic(id, callback){
+    return Wiki.update(
+      {private: false},
+      {where: {userId: id}}
+    )
+    .then((rowsUpdated) => {
+      console.log(rowsUpdated);
+    })
+    .catch(err)
+  },   
+      
+ 
 }
 
