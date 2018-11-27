@@ -66,6 +66,8 @@ module.exports = {
   deleteWiki(req, callback){
     return Wiki.findByPk(req.params.id)
     .then((wiki) => {
+      console.log("deleteWiki userId is: " + req.user.id);
+      console.log("deleteWiki wiki.userId is: " + wiki.userId);
       const authorized = new Authorizer(req.user, wiki).destroy();
       if(authorized) { 
         wiki.destroy()
@@ -88,7 +90,6 @@ module.exports = {
       {where: {userId: id}}
     )
     .then((rowsUpdated) => {
-      console.log(rowsUpdated);
     })
     .catch(err)
   },   
