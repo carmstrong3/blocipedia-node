@@ -96,12 +96,12 @@ module.exports = {
     });
   },
   show(req, res, next){
-    wikiQueries.getWiki(req.params.id, (err, wiki) => {
-      if(err || wiki == null){
+    wikiQueries.getWiki(req.params.id, (err, result) => {
+      if(err || result == null){
         res.redirect(404, "/");
       } else {
-        wiki.body = markdown.toHTML(wiki.body);
-        res.render("wikis/show", {wiki});
+        result["wiki"].body = markdown.toHTML(result["wiki"].body);
+        res.render("wikis/show", {result});
       }
     });
   }

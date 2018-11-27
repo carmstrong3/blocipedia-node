@@ -97,7 +97,7 @@ module.exports = {
     userQueries.setPremiumUser(res.locals.currentUser.id, (err, result) => {
       if(err || result.users === undefined){
         req.flash("notice", "No user found with that ID.");
-        res.redirect("users/show")
+        res.redirect("/users/show")
       } else {
         res.redirect(303, "/");
       };

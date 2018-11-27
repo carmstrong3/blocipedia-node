@@ -9,15 +9,38 @@
     <main class="container">
 
       <div style="display: flex, align-items:center;">
-      <h1><%= wiki.title %></h1>
+      <h1><%= result["wiki"].title %></h1>
       </div>
-      <% if(currentUser && (currentUser.isOwner(currentUser, wiki.userId) || currentUser.isAdmin(currentUser))) { %>
-      <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit</a>
-        <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
+      <div>
+      <h2>Collaborator Id's</h2>
+ <!-- Check if there are collaborators for the wiki -->
+      <% if(result["collaborators"]) { %>
+        <% result["collaborators"].forEach((collaborator) => { %>
+ <!-- If there are collaborators, build a <li> for each and link to the collaborator's show view -->
+          <li>
+            <a href="/users/<%= collaborator.userId %>">
+              <%= collaborator.userId %>
+            </a>
+            <% if(currentUser && (currentUser.isOwner(currentUser, result["wiki"].userId) || currentUser.isAdmin(currentUser)) && result["wiki"].private === true) { %>
+              <form style="display:intial" action="wikis/<%= result["wiki"].id %>/collaborators/<%= collaborator.id %>/destroy" method="post">
+              <button type="submit" class="btn btn-warning">Delete Collaborator</button>
+            </form> 
+          <% } %> 
+          </li>
+        <% }) %>
+      <% } %>
+      </div>
+      <% if(currentUser && (currentUser.isOwner(currentUser, result["wiki"].userId) || currentUser.isAdmin(currentUser))) { %>
+      <a href="/wikis/<%= result['wiki'].id %>/edit" class="btn btn-warning">Edit</a>
+        <form style="display:initial" action="/wikis/<%= result['wiki'].id %>/destroy" method="post">
           <button type="submit" class="btn btn-danger">Delete</button>
         </form>
       <% } %>
-      <p><%- wiki.body %></p>
+      <% if(currentUser && (currentUser.isOwner(currentUser, result["wiki"].userId) || currentUser.isAdmin(currentUser)) && result["wiki"].private === true) { %>
+        <a href="/wikis/<%= result['wiki'].id %>/collaborators/new" class="btn btn-warning">Add Collaborator</a>
+      <% } %>  
+
+      <p><%- result["wiki"].body %></p>
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>

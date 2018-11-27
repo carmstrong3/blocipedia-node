@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body>
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="container">
+      <% include ../static/partials/messages.ejs %>
+      <h1>New Collaborator</h1>
+      <form action="/wikis/<%= wikiId %>/collaborators/create" method="post">
+        <div class="form-group">
+          <label for="title">Collaborator UserId</label>
+          <input type="text" class="form-control" name="userId" aria-describedby="userIdHelp" placeholder="Enter UserId">
+         <small class="text-muted" id="userIdHelp">UserId must be integer.</small>
+        </div>
+        <div class="form-group">
+          <label for="wikiId">Collaborator WikiId</label>
+          <input type="text" class="form-control" name="wikiId" aria-desribedby="wikiIdHelp" value="<%= wikiId %>>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </main>
+
+    <% include ../static/partials/baseScripts.ejs %>
+
+  </body>
+</html>
+
+

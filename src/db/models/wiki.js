@@ -26,6 +26,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "userId",
       onDelete: "CASCADE"
     });    
+    // Collaborators belong to wikis where the userId is a foreign Key named collaborators
+    Wiki.hasMany(models.Collaborator, {
+      foreignKey: "wikiId",
+      as: "collaborators"
+    });
   };
 
   // Define the scope by calling addScope on the model.

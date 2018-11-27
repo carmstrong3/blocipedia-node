@@ -20,8 +20,16 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   User.associate = function(models) {
     // associations can be defined here
-
     // User has many wikis with the foreign key being the userId
+    User.hasMany(models.Wiki, {
+      foreignKey: "userId",
+      as: "wikis"
+    });
+    // User belongs to wikis as collaborators
+    User.hasMany(models.Collaborator, {
+      foreignKey: "userId",
+      as: "collaborators"
+    });
  };
 
   User.prototype.isAdmin = (currentUser) => {
