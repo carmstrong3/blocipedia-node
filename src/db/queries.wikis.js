@@ -2,6 +2,7 @@ const Wiki = require("./models").Wiki;
 const User = require("./models").User;
 const Collaborator = require("./models").Collaborator;
 const Authorizer = require("../policies/application");
+const Op = require('sequelize').Op;
 
 module.exports = {
 
@@ -13,9 +14,14 @@ module.exports = {
         attributes: ["userId"]
       }],
       where: [
-        {private: true},
-        {userId: user},
-        {'$collaborators.userId$': user}
+        {[Op.or]: [
+          {private: false},
+          {private: true, userId: user},
+          {private: true, '$collaborators.userId$': user}
+        ]}
+      ],
+      order: [
+        ['createdAt', 'DESC']
       ]
     })
     .then((wikis) => {

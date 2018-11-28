@@ -22,7 +22,7 @@
               <%= collaborator.userId %>
             </a>
             <% if(currentUser && (currentUser.isOwner(currentUser, result["wiki"].userId) || currentUser.isAdmin(currentUser)) && result["wiki"].private === true) { %>
-              <form style="display:intial" action="wikis/<%= result["wiki"].id %>/collaborators/<%= collaborator.id %>/destroy" method="post">
+              <form style="display:intial" action="/wikis/<%= result["wiki"].id %>/collaborators/<%= collaborator.id %>/destroy" method="post">
               <button type="submit" class="btn btn-warning">Delete Collaborator</button>
             </form> 
           <% } %> 

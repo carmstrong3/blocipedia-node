@@ -31,7 +31,7 @@ module.exports = {
       if(err){
         res.redirect(err, `/wikis/${req.params.id}`)
       } else {
-        res.redirect(303, "/wikis")
+        res.redirect(303, `/wikis/${collaborator.wikiId}`)
       }
     });
   }
