@@ -31,6 +31,7 @@
         <% } %>
       </ul>
       <hr>
+      <% if(currentUser && currentUser.id === result["users"].id) { %>
       <div>
           <p>Upgrade your account</p>
           <form action="/users/checkout" method="POST"> 
@@ -50,6 +51,7 @@
           </form> 
           <small>Downgrading will set your private wikis to public</small>
       </div>
+      <% } %>
     <% include ../static/partials/baseScripts.ejs %>
 
   </body>

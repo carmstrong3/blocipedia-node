@@ -13,7 +13,6 @@
       <ul class="list-group">
         <% wikis.forEach((wiki) => { %>
           <li class="list-group-item">
-            <% if(wiki.private === false || wiki.private === true && currentUser && currentUser.isOwner(currentUser, wiki.userId)) { %>
             <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
             <% if(currentUser && (currentUser.isAdmin(currentUser) || currentUser.isOwner(currentUser, wiki.userId))) {  %>
               <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit</a>
@@ -21,7 +20,6 @@
                 <button type="submit" class="btn btn-danger">Delete</button>
               </form>
           </li>
-          <% } %>
           <% } %>
         <% }) %>
       </ul>

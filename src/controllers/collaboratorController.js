@@ -4,16 +4,15 @@ const markdown = require("markdown").markdown;
 
 module.exports = {
   new(req, res, next){
-    console.log("called");
     res.render("collaborators/new", {wikiId: req.params.wikiId});
   },
 
   create(req, res, next){
     const authorized = new Authorizer(req.user).create();
-    if(authorized) { 
+    if(authorized) {
      collaboratorQueries.addCollaborator({
         userId: req.body.userId,
-        wikiId: req.params.id
+        wikiId: req.params.wikiId
       }, 
       (err, collaborator) => {
         if(err){

@@ -35,7 +35,7 @@ module.exports = class ApplicationPolicy {
   }
 
   destroy() {
-    return this.edit();
+    return this.update();
   }
 }
 

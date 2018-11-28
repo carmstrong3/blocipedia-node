@@ -1,12 +1,23 @@
 const Wiki = require("./models").Wiki;
 const User = require("./models").User;
 const Collaborator = require("./models").Collaborator;
-const Authorizer = require("../policies/wikis");
+const Authorizer = require("../policies/application");
 
 module.exports = {
 
-  getAllWikis(callback){
-    return Wiki.findAll()
+  getAllWikis(user, callback){
+    return Wiki.findAll({
+      include: [{
+        model: Collaborator,
+        as: "collaborators",
+        attributes: ["userId"]
+      }],
+      where: [
+        {private: true},
+        {userId: user},
+        {'$collaborators.userId$': user}
+      ]
+    })
     .then((wikis) => {
       callback(null, wikis);
     })

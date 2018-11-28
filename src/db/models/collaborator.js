@@ -44,5 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
+    
+
   return Collaborator;
 };

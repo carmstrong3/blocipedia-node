@@ -43,5 +43,12 @@ module.exports = (sequelize, DataTypes) => {
       order: [["createdAt", "DESC"]]
     }
   });
+
+  Wiki.addScope("isCollaborator", (userId) => {
+    return {
+      where: {userId: userId}
+    }
+  });
+  
   return Wiki;
 };
